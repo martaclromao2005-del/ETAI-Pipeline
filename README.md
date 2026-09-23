@@ -1,5 +1,5 @@
 # Baseline Predictive Pipeline -- ETAI
-# Marta Romão 2023-1834
+# Marta Romão 20231834
 
 ## Introduction
 
@@ -41,65 +41,67 @@ This table is updated after each practical class, so you can always see what cha
 
 ## week 2
 
-*Logistic Regression*
-  Train accuracy: 0.679
-  Test accuracy:  0.678
-  Gap (train - test): +0.001
+|*Logistic Regression*|
+|Train accuracy| 0.679|
+|Test accuracy|  0.678|
+|Gap (train - test)| +0.001|
 
 Train and test accuracy are nearly identical 0.679 and 0.678 having a gap realy near 0 ,
 showing the model generalizes well with no overfitting.
 
-*Decision Tree*
-  Train accuracy: 0.829
-  Test accuracy:  0.633
-  Gap (train - test): +0.196
+|*Decision Tree*|
+|Train accuracy| 0.829|
+|Test accuracy|  0.633|
+| Gap (train - test)| +0.196|
 
 Train accuracy 0.829 is much higher than test accuracy 0.633 having a gap of +0.196 a clear sign of overfitting. 
 The tree memorized the training data instead of learning generalizable patterns.
 
-**Overall
+**Overall**
 Logistic regression is the more reliable model here. Although its training accuracy is lower, it performs consistently on unseen data. 
 The decision tree looks stronger on paper , but that advantage doesn't hold on test data, making it less trustworthy for real predictions.
 
 ## week 3
-EDA- ver missing values
+**EDA**
+  - ver missing values
   - ver valores que não fazem sentido (?, -)
   - ver duplicados
   - ver multicolinearidade
 
-Preprocessing - standardizar nome das variaveis
-              - mudar data types
-              - remover valores que não fazem sentidos, extremos
+**Preprocessing** 
+- standardizar nome das variaveis
+- mudar data types
+- remover valores que não fazem sentidos, extremos
 
-*Logistic Tree*
-Train accuracy: 0.676
-Test accuracy:  0.657
-Gap (train - test): +0.019
+|*Logistic Tree*|
+|Train accuracy| 0.676|
+|Test accuracy|  0.657|
+|Gap (train - test)| +0.019|
 
 This shows that the model generalizes reasonably well, with only a small difference between training and test performance 
 and no strong signs of overfitting.
 
-*Decision Tree*
-Train accuracy: 0.679
-Test accuracy:  0.678
-Gap (train - test): +0.001
+|*Decision Tree*|
+|Train accuracy| 0.679|
+|Test accuracy|  0.678|
+|Gap (train - test)| +0.001|
 
 This suggests that the model generalizes very well to unseen data, with no clear signs of overfitting.
 
-**Overall
+**Overall**
 The Decision Tree performs slightly better on the test data, with an accuracy of 0.678 compared to 0.657 for Logistic Regression. It also has a much smaller train-test gap, suggesting more consistent performance between training and unseen data.
 
 Compared to Week 2, the Decision Tree improved significantly on test data, while the difference between training and test accuracy became almost zero. Logistic Regression also remains relatively stable, with only a small gap between train and test performance.
 
 ## RUN
 
-**Windows**
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-```powershell
+```Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+powershell
 venv\Scripts\activate
 python main.py
 ```
-## push
-git add .
+## PUSH
+```git add .
 git commit -m "comment"
 git push
+```
