@@ -65,6 +65,7 @@ The decision tree looks stronger on paper , but that advantage doesn't hold on t
 EDA- ver missing values
   - ver valores que não fazem sentido (?, -)
   - ver duplicados
+  - ver multicolinearidade
 
 Preprocessing - standardizar nome das variaveis
               - mudar data types
@@ -75,15 +76,22 @@ Train accuracy: 0.676
 Test accuracy:  0.657
 Gap (train - test): +0.019
 
+This shows that the model generalizes reasonably well, with only a small difference between training and test performance 
+and no strong signs of overfitting.
 
 *Decision Tree*
 Train accuracy: 0.679
 Test accuracy:  0.678
 Gap (train - test): +0.001
 
+This suggests that the model generalizes very well to unseen data, with no clear signs of overfitting.
 
+**Overall
+The Decision Tree performs slightly better on the test data, with an accuracy of 0.678 compared to 0.657 for Logistic Regression. It also has a much smaller train-test gap, suggesting more consistent performance between training and unseen data.
 
-## Environment setup
+Compared to Week 2, the Decision Tree improved significantly on test data, while the difference between training and test accuracy became almost zero. Logistic Regression also remains relatively stable, with only a small gap between train and test performance.
+
+## RUN
 
 **Windows**
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
@@ -91,25 +99,7 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 venv\Scripts\activate
 python main.py
 ```
-
-## Running the pipeline
-
-```bash
-python main.py
-```
-##
-This loads `config.yaml`, loads and preprocesses the data, trains the model, and prints:
-- **train accuracy and test accuracy, side by side.** Comparing the two is how you catch overfitting: if the model looks much better on the data it was trained on than on data it's never seen, it has memorised rather than learned something that generalises. 
-- a classification report on the test set
-- a false-positive-rate-by-race comparison between our model and
-  COMPAS's own score
-
-All of this is also saved to a timestamped file in `results/` (e.g.`results/run_20260916_143012.txt`), so it doesn't just scroll past in your terminal -- open it later, or change something in `config.yaml` (like the model type) and compare the new file to the last one.
-`results/` is created automatically the first time you run the
-pipeline, and isn't tracked in git (see `.gitignore`) since it's
-generated output, not source.
-
-
-## Dataset
-
-See `data/README.md`.
+## push
+git add .
+git commit -m "comment"
+git push
