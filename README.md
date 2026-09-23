@@ -61,6 +61,28 @@ The tree memorized the training data instead of learning generalizable patterns.
 Logistic regression is the more reliable model here. Although its training accuracy is lower, it performs consistently on unseen data. 
 The decision tree looks stronger on paper , but that advantage doesn't hold on test data, making it less trustworthy for real predictions.
 
+## week 3
+EDA- ver missing values
+  - ver valores que não fazem sentido (?, -)
+  - ver duplicados
+
+Preprocessing - standardizar nome das variaveis
+              - mudar data types
+              - remover valores que não fazem sentidos, extremos
+
+*Logistic Tree*
+Train accuracy: 0.676
+Test accuracy:  0.657
+Gap (train - test): +0.019
+
+
+*Decision Tree*
+Train accuracy: 0.679
+Test accuracy:  0.678
+Gap (train - test): +0.001
+
+
+
 ## Environment setup
 
 **Windows**
