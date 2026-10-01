@@ -41,7 +41,8 @@ This table is updated after each practical class, so you can always see what cha
 
 ## week 2
 
-|*Logistic Regression*|
+| **Logistic Regression** | |
+|---|---:|
 |Train accuracy| 0.679|
 |Test accuracy|  0.678|
 |Gap (train - test)| +0.001|
@@ -49,7 +50,8 @@ This table is updated after each practical class, so you can always see what cha
 Train and test accuracy are nearly identical 0.679 and 0.678 having a gap realy near 0 ,
 showing the model generalizes well with no overfitting.
 
-|*Decision Tree*|
+| **Decision Tree** | |
+|---|---:|
 |Train accuracy| 0.829|
 |Test accuracy|  0.633|
 | Gap (train - test)| +0.196|
@@ -73,7 +75,8 @@ The decision tree looks stronger on paper , but that advantage doesn't hold on t
 - mudar data types
 - remover valores que não fazem sentidos, extremos
 
-|*Logistic Tree*|
+| **Logistic Regression** | |
+|---|---:|
 |Train accuracy| 0.676|
 |Test accuracy|  0.657|
 |Gap (train - test)| +0.019|
@@ -81,7 +84,8 @@ The decision tree looks stronger on paper , but that advantage doesn't hold on t
 This shows that the model generalizes reasonably well, with only a small difference between training and test performance 
 and no strong signs of overfitting.
 
-|*Decision Tree*|
+| **Decision Tree** | |
+|---|---:|
 |Train accuracy| 0.679|
 |Test accuracy|  0.678|
 |Gap (train - test)| +0.001|
@@ -92,6 +96,37 @@ This suggests that the model generalizes very well to unseen data, with no clear
 The Decision Tree performs slightly better on the test data, with an accuracy of 0.678 compared to 0.657 for Logistic Regression. It also has a much smaller train-test gap, suggesting more consistent performance between training and unseen data.
 
 Compared to Week 2, the Decision Tree improved significantly on test data, while the difference between training and test accuracy became almost zero. Logistic Regression also remains relatively stable, with only a small gap between train and test performance.
+
+## Week 4
+
+**Cross Validation**
+
+| **Logistic Regression** | |
+|---|---:|
+|Train accuracy| 0.675 |
+|Test accuracy|   0.673|
+|Gap (train - test)| +0.002|
+
+This shows that the model generalizes very well, with almost no difference between training and test performance and no clear signs of overfitting.
+
+| **Decision Tree** | |
+|---|---:|
+|Train accuracy| 0.801|
+|Test accuracy|  0.625|
+|Gap (train - test)| +0.176|
+
+This suggests that the model performs much better on the training data than on unseen data, indicating a strong sign of overfitting.
+
+| **Random Forest** | |
+|---|---:|
+| Train accuracy | 0.801 |
+| Test accuracy | 0.631 |
+| Gap (train - test) | +0.170 |
+
+This also shows a considerable difference between training and test performance, suggesting that the model is overfitting the training data and does not generalize as well to unseen data.
+
+**Overall**
+The Logistic Tree performs best on the test data, with an accuracy of 0.673 and the smallest train-test gap (+0.002). Compared to Week 3, its test accuracy improved slightly, while the Decision Tree and Random Forest show stronger signs of overfitting.
 
 ## RUN
 
