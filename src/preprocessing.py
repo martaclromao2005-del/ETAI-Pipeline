@@ -1,16 +1,30 @@
-"""
-Preprocessing -- week 3
-"""
 import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import StratifiedKFold, train_test_split
-from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, StandardScaler, MinMaxScaler, RobustScaler
-from category_encoders import CountEncoder, TargetEncoder
+from sklearn.preprocessing import (
+    OneHotEncoder, OrdinalEncoder, TargetEncoder, StandardScaler, MinMaxScaler, RobustScaler,
+)
+from category_encoders import CountEncoder
 
-from src.data_diagnostics import flag_invalid_values
+def flag_invalid_values(df: pd.DataFrame, rules: dict) -> pd.DataFrame:
+    """
+    Applies {column: {"min": ..., "max": ...}} domain rules (either bound optional) and sets
+    violations to NaN, in place. Returns the number of violations per column.
+    """
+    report_rows = []
+    for column, bounds in rules.items():
+        if column not in df.columns:
+            continue
+        numeric = pd.to_numeric(df[column], errors="coerce")
+        lower_ok = numeric >= bounds["min"] if "min" in bounds else pd.Series(True, index=numeric.index)
+        upper_ok = numeric <= bounds["max"] if "max" in bounds else pd.Series(True, index=numeric.index)
+        violations = numeric.notna() & ~(lower_ok & upper_ok)
+        report_rows.append({"column": column, "rule": bounds, "violations": int(violations.sum())})
+        df.loc[violations, column] = np.nan
+    return pd.DataFrame(report_rows)
 
 # mudar para lowercase e tirar espaços e mudar para o valor certo
 def _canonicalize_categories(df: pd.DataFrame, columns_and_maps: dict, placeholder_tokens: set) -> pd.DataFrame:
@@ -100,10 +114,10 @@ def split_features_target(df: pd.DataFrame, data_config: dict, mnar_indicator_so
 
 _SCALERS = {"none": "passthrough", "standard": StandardScaler, "minmax": MinMaxScaler, "robust": RobustScaler}
 _ENCODERS = {
-    "onehot": lambda: OneHotEncoder(handle_unknown="ignore", sparse_output=False),
-    "ordinal": lambda: OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1),
-    "count": lambda: CountEncoder(handle_unknown=0, handle_missing=0),
-    "target": lambda: TargetEncoder(handle_unknown="value", handle_missing="value"),
+    "onehot": lambda seed: OneHotEncoder(handle_unknown="ignore", sparse_output=False),
+    "ordinal": lambda seed: OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1),
+    "count": lambda seed: CountEncoder(handle_unknown=0, handle_missing=0),
+    "target": lambda seed: TargetEncoder(target_type="binary", cv=StratifiedKFold(5, shuffle=True, random_state=seed)),
 }
 
 
@@ -124,7 +138,7 @@ def build_preprocessor(preprocessing_config: dict) -> ColumnTransformer:
 
     scaler_factory = _SCALERS[scaler_name]
     scaler = scaler_factory() if callable(scaler_factory) else scaler_factory
-    encoder = _ENCODERS[encoder_name]()
+    encoder = _ENCODERS[preprocessing_config["encoder"]](preprocessing_config.get("random_state"))
 
     numeric_pipeline = Pipeline([
         ("impute", SimpleImputer(strategy=imputation.get("numeric_strategy", "median"))),
