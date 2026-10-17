@@ -173,3 +173,35 @@ def split_dev_test(X, y, extras, test_size: float, random_state: int):
         X, y, extras, test_size=test_size, random_state=random_state, stratify=y
     )
     return X_dev, X_test, y_dev, y_test, extras_dev, extras_test
+
+def add_engineered_features(df: pd.DataFrame) -> pd.DataFrame:
+    # EXAMPLE (Challenge 1). Fixed formulas only -- nothing is learned, so this is safe before the split.
+    out = df.copy()
+    out["priors_per_adult_year"] = out["priors_count"] / (out["age"] - 17).clip(lower=1)   # NaN stays NaN -> imputed later
+
+    out["priors_any"] = (out["priors_count"] > 0).astype("Int64")
+    out.loc[out["priors_count"].isna(), "priors_any"] = pd.NA
+
+        # Juvenile offenses but no adult priors
+    juvenile_cols = [
+        "juv_fel_count",
+        "juv_misd_count",
+         "juv_other_count"
+        ]
+
+        # Check that all required values are available
+    valid = out[juvenile_cols + ["priors_count"]].notna().all(axis=1)
+
+        # Initialize as missing
+    out["juvenile_only"] = pd.Series(
+        pd.NA, index=out.index, dtype="Int64"
+    )
+
+    # 1 = at least one juvenile offense and no adult priors
+    out.loc[valid, "juvenile_only"] = (
+        (out.loc[valid, juvenile_cols].sum(axis=1) > 0) &
+        (out.loc[valid, "priors_count"] == 0)
+    ).astype("Int64")
+
+    return out
+
