@@ -175,7 +175,7 @@ def split_dev_test(X, y, extras, test_size: float, random_state: int):
     return X_dev, X_test, y_dev, y_test, extras_dev, extras_test
 
 def add_engineered_features(df: pd.DataFrame) -> pd.DataFrame:
-    # EXAMPLE (Challenge 1). Fixed formulas only -- nothing is learned, so this is safe before the split.
+
     out = df.copy()
     out["priors_per_adult_year"] = out["priors_count"] / (out["age"] - 17).clip(lower=1)   # NaN stays NaN -> imputed later
 
